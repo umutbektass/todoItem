@@ -1,17 +1,20 @@
 import React from 'react'
-import { useDispatch} from 'react-redux'
+import { useDispatch,useSelector} from 'react-redux'
 import { useState } from 'react'
 import { addTodo } from '../redux/todos/todoSlice'
 import { nanoid } from 'nanoid'
 
 function Form() {
+  const items = useSelector(state=>state.todos.items)
+  localStorage.setItem("task",JSON.stringify(items))
   const dispatch = useDispatch()
   const [title,setTitle]=useState("")
   const [error,setError]=useState("")
   const [errorSiutation,setErrorSiutation]=useState(false)
   const handleSubmit = (e)=>{
     e.preventDefault()
-    if(title.length ==0){
+   const titleTrim= title.trim()
+    if(titleTrim.length ==0){
       return setError("Lütfen değer giriniz."), setErrorSiutation(true)
     }
     dispatch(addTodo({
@@ -19,6 +22,7 @@ function Form() {
     }))
     setTitle("")
   }
+  
   if(errorSiutation){
     setTimeout(() => setErrorSiutation(false),3000)
   }
@@ -32,7 +36,7 @@ function Form() {
       }
       
         <form onSubmit={handleSubmit}>
-    <input value={title} className="new-todo" placeholder="What needs to be done?" autoFocus  onChange={e=>setTitle(e.target.value)}/>
+    <input value={title} className="new-todo formfield" placeholder="What needs to be done?" autoFocus  onChange={e=>setTitle(e.target.value)}/>
         </form>
 </div>
   )

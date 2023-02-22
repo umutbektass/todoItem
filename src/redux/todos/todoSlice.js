@@ -1,5 +1,6 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { useSelector } from "react-redux";
 export const getTodosAsync = createAsyncThunk("todos/getTodosAsync", async()=>{
     const res =await axios("http://localhost:7000/todos")
     return res.data;
@@ -7,7 +8,7 @@ export const getTodosAsync = createAsyncThunk("todos/getTodosAsync", async()=>{
 export const todosSlice = createSlice({
     name:"todos",
     initialState:{
-        items:[{"id":1,"title":"React","complated":false}],
+        items:JSON.parse(localStorage.getItem("task")),
     activeFilter:"All",
     isLoading:true,
     error:""
@@ -38,5 +39,6 @@ export const todosSlice = createSlice({
    
 }
 })
+
 export const {addTodo,toggle,deleteItem,secimDegistir,clearComplated} = todosSlice.actions;
 export default todosSlice.reducer;

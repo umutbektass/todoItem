@@ -4,7 +4,7 @@ import ContentFooter from './ContentFooter'
 
 function Content() {
   return (
-    <div>
+    <div >
         <section className="main">
 		<input className="toggle-all" type="checkbox" />
 		<label htmlFor="toggle-all">
